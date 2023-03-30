@@ -348,14 +348,14 @@ def update_an(templetes:Templete, tempId: str):
         if (
             existing_templete := templete.find_one({"_id": tempId})
         ) is not None:
-            return JSONResponse(content=jsonable_encoder({"interface": existing_templete}))
+            return JSONResponse(content=jsonable_encoder({"templates": existing_templete}))
 
         if len(temp) >= 1:
             update_result = templete.update_one({"_id": tempId}, {"$set": temp})
         if update_result.modified_count == 0:
-            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content=jsonable_encoder({"detail": f"Interface with ID ({tempId}) not found"}))
+            return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content=jsonable_encoder({"detail": f"Template with ID ({tempId}) not found"}))
 
-        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content=jsonable_encoder({"detail": f"Interface with ID ({tempId}) not found"}))
+        return JSONResponse(status_code=status.HTTP_404_NOT_FOUND,content=jsonable_encoder({"detail": f"Template with ID ({tempId}) not found"}))
     except Exception as e:
         return JSONResponse(status_code=status.HTTP_500_INTERNAL_SERVER_ERROR, content=jsonable_encoder({"detail": str(e)}))
     
